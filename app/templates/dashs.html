@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+Дэшборды
+{% endblock %}
+{% block info %}
+<h1>Дэшборды</h1>
+{% for dash in dashs %}
+<form method ="post">
+    <div>
+        <button class="btn btn-primary" type="submit" value="{{ dash }}" name="btn">{{ dash }}</button>
+        <button class="btn btn-primary" type="submit" value="{{ dash }}" name="delete">Удалить</button>
+    </div>
+</form>
+{% endfor %}
+{% endblock %}

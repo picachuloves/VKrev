@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}
+Выгрузить
+{% endblock %}
+{% block info %}
+<div class="col-md-7 col-lg-8">
+    <form>
+        <div>
+            <label for="name" class="form-label">Введите название выгрузки</label>
+            <input type="text" id="name">
+        </div>
+        <div>
+            <select class="form-select" id="groups" title="Группа"></select>
+            <select class="form-select" id="boards" title="Обсуждение"></select>
+        </div>
+        <div>
+            <div class="my-3">
+            <div class="form-check">
+              <input id="logreg" value="logreg" name="method" type="radio" class="form-check-input" checked="" required="">
+              <label class="form-check-label" for="logreg">Логистическая регрессия</label>
+            </div>
+            <div class="form-check">
+              <input id="svm" value="svm" name="method" type="radio" class="form-check-input" required="">
+              <label class="form-check-label" for="svm">Метод опорных векторов</label>
+            </div>
+            <div class="form-check">
+              <input id="nb" value="nb" name="method" type="radio" class="form-check-input" required="">
+              <label class="form-check-label" for="nb">Наивный Байес</label>
+            </div>
+          </div>
+        </div>
+        <input class="btn btn-primary" type="button" value="Загрузить" data-loading-text="Загрузка..." id="myBtn">
+    </form>
+    <div>
+
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+    var myGroups = {{ groups|tojson }}
+
+    for(groupname of Object.keys(myGroups)){
+        $('#groups').append(
+            `<option value="${groupname}">${groupname}</option>`
+        );
+    }
+
+    $('#groups').change(function (){
+        var key = $(this).val();
+        var myBoards = myGroups[key];
+
+        for(board of myBoards){
+             $('#boards').html(
+                 `<option value="${board}">${board}</option>`
+             )
+        }
+    });
+
+    $('#groups').trigger('change');
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+    $('#myBtn').button();
+    $('#myBtn').click(function(){
+        $('#myBtn').button('loading');
+        var group = $('#groups').val();
+        var board = $('#boards').val();
+        var name = $('#name').val()
+        var method = $('.form-check-input').val()
+        console.log(method)
+          $.ajax({
+              url: "/load",
+              method: "POST",
+              data: {
+                  method: method,
+                  name: name,
+                  group: group,
+                  board: board,
+              },
+              success: function(response) {
+                  if (response.redirect) {
+                      window.location.href = response.redirect;
+                  }
+}
+          }).done(function() {
+          });
+    });
+
+
+</script>
+{% endblock %}

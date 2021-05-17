@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+VKrev
+{% endblock %}
+{% block info %}
+<h1>VKrev</h1>
+{% if current_user.is_anonymous %}
+<a href=login><button class="w-100 btn btn-lg btn-primary" type="submit">Авторизироваться через вконтакте</button></a>
+{% else %}
+<a href=load><button class="w-100 btn btn-lg btn-primary" type="submit">Загрузить комментарии</button></a>
+<a href=dashs><button class="w-100 btn btn-lg btn-primary" type="submit">Дэшборды</button></a>
+<a href=logout><button class="w-100 btn btn-lg btn-primary" type="submit">Выйти</button></a>
+<!--<a href=dashboard><button class="w-100 btn btn-lg btn-primary" type="submit">dashboard</button></a>-->
+<!--<a href=test><button class="w-100 btn btn-lg btn-primary" type="submit">Test</button></a>-->
+{% endif %}
+{% endblock %}
