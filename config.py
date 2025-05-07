@@ -10,8 +10,8 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     OAUTH_CREDENTIALS = {
         'vk': {
-            'id': '7789432',
-            'secret': 'qc5C0ZXRZbBJxi6xqCQ5',
+            'id': '',
+            'secret': '',
             'redirect_uri': 'http://localhost:5000/get_access'
         }
     }
